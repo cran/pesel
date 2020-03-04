@@ -64,7 +64,7 @@ pesel <- function(X, npc.min = 1, npc.max = 10, prior = NULL, scale = TRUE,
 
   method = match.arg(method)
 
-  if(class(X) == "data.frame"){
+  if("data.frame" %in% class(X)){
     X = as.matrix(X)
   }
 

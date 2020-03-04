@@ -1,11 +1,11 @@
-3652a5f01d5541fff18b15500ae932f0 *DESCRIPTION
+a4ae5eee594d83b3bdb6a66061367044 *DESCRIPTION
 0c986dcfc0aeec0d3896990a72bb90f6 *NAMESPACE
 6ff503a840b4386daf2b6ff6153fc68f *R/auxilliary.R
-2fc2320176380898c5d22050d2d2f813 *R/pesel.R
+01158c81f46eace9b6e404df0999f0e0 *R/pesel.R
 342d1af48c1c71172dde29185696fbfc *R/pesel_package.R
 f91874ba68d3b6232fe5f5f3759042ce *README.md
 d20e683b419642192053a2d3429a798a *man/pesel-package.Rd
-9e001f67cf945e3c375b0168c40db3f1 *man/pesel.Rd
+7a2676dbb46d9a7069e0d75cf76d6d40 *man/pesel.Rd
 be666e7c6e88505a64f3c86289bbce24 *man/pesel_heterogeneous.Rd
 bd99e411baa36524b57c7efafdacfd18 *man/pesel_homogeneous.Rd
 23e22905009ac92eefd31ec6bfb346bd *man/plot.pesel.result.Rd
