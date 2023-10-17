@@ -7,7 +7,7 @@ with PEnalized SEmi-integrated Likelihood (PESEL)}
 \usage{
 pesel(
   X,
-  npc.min = 1,
+  npc.min = 0,
   npc.max = 10,
   prior = NULL,
   scale = TRUE,

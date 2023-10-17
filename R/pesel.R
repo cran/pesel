@@ -43,7 +43,7 @@
 #' X <- SIGNAL + replicate(numb.vars, sigma * rnorm(n))
 #' pesel(X)
 #'
-pesel <- function(X, npc.min = 1, npc.max = 10, prior = NULL, scale = TRUE,
+pesel <- function(X, npc.min = 0, npc.max = 10, prior = NULL, scale = TRUE,
                       method = c("heterogenous", "homogenous"), asymptotics = NULL){
   # preprocessing on X
   # number of components must be smaller than dimensions of X
@@ -51,7 +51,6 @@ pesel <- function(X, npc.min = 1, npc.max = 10, prior = NULL, scale = TRUE,
   p = ncol(X)
   npc.max = min(npc.max, min(n,p)-1)
   npc.min = max(npc.min, 0)
-
   if(is.null(prior)){
     prior = rep(1/(npc.max - npc.min + 1), npc.max - npc.min + 1)
   } else if(length(prior) != npc.max - npc.min + 1){
@@ -71,38 +70,51 @@ pesel <- function(X, npc.min = 1, npc.max = 10, prior = NULL, scale = TRUE,
   if(sum(sapply(X, is.numeric)) < p){
     stop("All the variables have to be numeric")
   }
-
   missing = which(is.na(X))
   if(length(missing) !=  0){
     stop("There are missing values")
   }
 
-  if(scale)
-    X = scale(X)
-
   vals = numeric(length(prior))
   if(is.null(asymptotics)){
     vals = if(p > n) {
+      if(scale[1] == TRUE){
+        X = t(scale(X))
+      } else{
+        X = t(X)
+      }
+      X = as.matrix(X)
       switch(method,
              "heterogenous" = pesel_heterogeneous(X, npc.min, npc.max),
              "homogenous" = pesel_homogeneous(X, npc.min, npc.max))
     } else {
+      if(scale[1] == TRUE){
+        X <- t(as.matrix(scale(t(X))))
+      }
       switch(method,
-             "heterogenous" = pesel_heterogeneous(t(X), npc.min, npc.max),
-             "homogenous" = pesel_homogeneous(t(X), npc.min, npc.max))
+             "heterogenous" = pesel_heterogeneous(X, npc.min, npc.max),
+             "homogenous" = pesel_homogeneous(X, npc.min, npc.max))
     }
   } else if(asymptotics == "p") {
+    if(scale[1] == TRUE){
+      X = t(scale(X))
+    } else{
+      X = t(X)
+    }
+    X <- as.matrix(X)
     vals = switch(method,
                   "heterogenous" = pesel_heterogeneous(X, npc.min, npc.max),
                   "homogenous" = pesel_homogeneous(X, npc.min, npc.max))
   } else if(asymptotics == "n") {
+    if(scale[1] == TRUE){
+      X <- t(as.matrix(scale(t(X))))
+    }
     vals = switch(method,
-                  "heterogenous" = pesel_heterogeneous(t(X), npc.min, npc.max),
-                  "homogenous" = pesel_homogeneous(t(X), npc.min, npc.max))
+                  "heterogenous" = pesel_heterogeneous(X, npc.min, npc.max),
+                  "homogenous" = pesel_homogeneous(X, npc.min, npc.max))
   } else {
     stop("asymptotics must be either NULL, 'n' or 'p'")
   }
-
   posterior = vals + log(prior)
   posterior = posterior - max(posterior) + 20
   posterior = exp(posterior)/sum(exp(posterior))
@@ -125,6 +137,7 @@ pesel <- function(X, npc.min = 1, npc.max = 10, prior = NULL, scale = TRUE,
 #' @param posterior a boolean, if TRUE (default value) then posterior probablities are plotted
 #' otherwise values of PeSeL criterion are plotted
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
+#' @return No return value, called for side effects
 #' @export
 #' @keywords internal
   plot.pesel.result <- function(x, posterior = TRUE, ...){
@@ -146,6 +159,7 @@ pesel <- function(X, npc.min = 1, npc.max = 10, prior = NULL, scale = TRUE,
 #'
 #' @param x pesel.result class object
 #' @param ... Further arguments to be passed to or from other methods. They are ignored in this function.
+#' @return No return value, called for side effects
 #' @export
 #' @keywords internal
 print.pesel.result <- function(x,...){

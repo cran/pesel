@@ -1,6 +1,8 @@
 
-[![Build Status](https://api.travis-ci.org/psobczyk/pesel.png)](https://travis-ci.org/psobczyk/pesel)
 
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/pesel)](https://CRAN.R-project.org/package=pesel)
+[![Downloads](https://cranlogs.r-pkg.org/badges/pesel)](https://CRAN.R-project.org/package=pesel)
+[![R build status](https://github.com/psobczyk/pesel/workflows/R-CMD-check/badge.svg)](https://github.com/psobczyk/pesel/actions?query=workflow%3AR-CMD-check)
 [<img src="http://www.ideal.rwth-aachen.de/wp-content/uploads/2013/08/banner1.png">](http://www.ideal.rwth-aachen.de/)
 
 -------------
